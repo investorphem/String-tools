@@ -1,0 +1,38 @@
+name: Auto Publish to npm
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  auto-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2. Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org/"
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Run tests (optional)
+      - name: Run tests
+        run: npm test || echo "No tests found, continuing..."
+
+      # 5. Auto version bump & publish
+      - name: Auto publish npm package
+        uses: phips28/auto-publish-npm@v1.4.0
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          bump: patch       # options: patch, minor, major

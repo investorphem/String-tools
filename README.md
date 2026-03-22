@@ -3,9 +3,9 @@
 [![npm version](https://img.shields.io/npm/v/@investorphem/string-tools.svg?style=flat-square)](https://www.npmjs.com/package/@investorphem/string-tools)
 [![npm downloads](https://img.shields.io/npm/dm/@investorphem/string-tools.svg?style=flat-square)](https://www.npmjs.com/package/@investorphem/string-tools)
 [![License](https://img.shields.io/npm/l/@investorphem/string-tools.svg?style=flat-square)](LICENSE)
-[![Build Status](https://github.com/<your-username>/investorphem-string-tools/actions/workflows/publish.yml/badge.svg)](https://github.com/<your-username>/investorphem-string-tools/actions/workflows/publish.yml)
+[![Build Status](https://github.com/investorphem/string-tools/actions/workflows/publish.yml/badge.svg)](https://github.com/investorphem/string-tools/actions/workflows/publish.yml)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Contributors](https://img.shields.io/github/contributors/investorphem/investorphem-string-tools.svg)](https://github.com/investorphem/investorphem-string-tools/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/investorphem/string-tools.svg)](https://github.com/investorphem/string-tools/graphs/contributors)
 
 ---
 

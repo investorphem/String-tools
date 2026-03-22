@@ -16,14 +16,14 @@ jobs:
     steps:
       # 1️⃣ Checkout the repository
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # 2️⃣ Setup Node.js
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org/'
@@ -45,7 +45,9 @@ jobs:
       # 6️⃣ Get current package version
       - name: Get current version
         id: current_version
-        run: echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       # 7️⃣ Bump version (only for real commits, not bot commits)
       - name: Bump version
@@ -57,10 +59,12 @@ jobs:
         if: "!contains(github.event.head_commit.message, 'ci: release')"
         run: git push origin main --follow-tags
 
-      # 9️⃣ Get new version after bump
+      # 9️⃣ Get new version after bump (Line 53 Fix Area)
       - name: Get new version
         id: new_version
-        run: echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       # 🔟 Check if the version already exists on npm
       - name: Check version on npm

@@ -1,4 +1,4 @@
-name: Auto Publish to npm
+name: Production Publish to npm
 
 on:
   push:
@@ -11,40 +11,66 @@ permissions:
 
 jobs:
   publish:
-    # 🚫 Prevent workflow from running on version bump commits
-    if: "!contains(github.event.head_commit.message, 'ci: bump version')"
-
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # 1️⃣ Checkout repo with full history
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/setup-node@v3
+      # 2️⃣ Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org/'
 
-      - run: npm install
+      # 3️⃣ Install deps
+      - name: Install
+        run: npm install
 
-      - run: npm test || echo "No tests found"
+      # 4️⃣ Run tests (safe fallback)
+      - name: Test
+        run: npm test || echo "No tests"
 
-      - name: Configure Git
+      # 5️⃣ Configure Git
+      - name: Setup Git
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-      # ✅ Always bump BEFORE publish
+      # 6️⃣ Get current version
+      - name: Get current version
+        id: current_version
+        run: echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+
+      # 7️⃣ Bump version ONLY for real commits (not bot commits)
       - name: Bump version
-        run: npm version patch -m "ci: bump version to %s"
+        if: "!contains(github.event.head_commit.message, 'ci: release')"
+        run: npm version patch -m "ci: release %s"
 
-      - name: Push version
+      # 8️⃣ Push version back
+      - name: Push changes
+        if: "!contains(github.event.head_commit.message, 'ci: release')"
         run: git push origin main --follow-tags
 
-      # ✅ Publish AFTER correct version
-      - name: Publish
+      # 9️⃣ Get new version
+      - name: Get new version
+        id: new_version
+        run: echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+
+      # 🔟 Prevent duplicate publish
+      - name: Check if version exists on npm
+        id: check_version
+        run: |
+          npm view @investorphem/string-tools@${{ steps.new_version.outputs.version }} version || echo "not_found=true" >> $GITHUB_OUTPUT
+
+      # 1️⃣1️⃣ Publish ONLY if version is new
+      - name: Publish to npm
+        if: steps.check_version.outputs.not_found == 'true'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

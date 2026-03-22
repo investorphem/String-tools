@@ -6,45 +6,40 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write   # 🔥 REQUIRED
+
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0   # مهم for tags
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2️⃣ Setup Node.js and npm
       - uses: actions/setup-node@v3
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org/'
 
-      # 3️⃣ Install dependencies
       - run: npm install
+      - run: npm test || echo "No tests found"
 
-      # 4️⃣ Optional: Run tests
-      - run: npm test || echo "No tests found, continuing..."
-
-      # 5️⃣ Configure Git
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      # 6️⃣ Bump version
       - name: Bump version
         run: |
           npm version patch -m "ci: bump version to %s"
 
-      # 🔥 7️⃣ PUSH VERSION BACK TO GITHUB (THIS FIXES YOUR ERROR)
       - name: Push changes
         run: |
           git push origin main --follow-tags
 
-      # 8️⃣ Publish to npm
       - name: Publish package
         run: npm publish --access public
         env:

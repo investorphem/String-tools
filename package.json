@@ -1,8 +1,8 @@
 {
   "name": "@investorphem/string-tools",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
-  "description": "Handy string utility functions ers",
+  "description": "Handy string utility functions for developers",
   "scripts": {
     "test": "node test.js"
   },

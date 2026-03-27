@@ -1,11 +1,12 @@
 // Capitalize the first letter of a string
-function capitalize(str) {
+export function capitalize(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Convert a string to kebab-case
-function kebabCase(str) {
+export function kebabCase(str) {
+  if (!str) return "";
   return str
     .replace(/\s+/g, "-")
     .replace(/([a-z])([A-Z])/g, "$1-$2")
@@ -13,8 +14,7 @@ function kebabCase(str) {
 }
 
 // Reverse a string
-function reverse(str) {
+export function reverse(str) {
+  if (!str) return "";
   return str.split("").reverse().join("");
 }
-
-module.exports = { capitalize, kebabCase, reverse };

@@ -13,7 +13,7 @@ export function kebabCase(str) {
     .toLowerCase();
 
 // Reverse a string
-export function reverse(str) {
+export functio reverse(str) {
   if (!str) return "";
   return str.split("").reverse().join("");
 }

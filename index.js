@@ -12,7 +12,6 @@ export function kebabCase(str) {
     .replace(/([a-z])([A-Z])/g, "$1-$2")
     .toLowerCase();
 }
-
 // Reverse a string
 export function reverse(str) {
   if (!str) return "";

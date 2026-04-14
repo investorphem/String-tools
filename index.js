@@ -10,7 +10,7 @@ export function kebabCase(str)
   return st
     .replace(/\s+/g,-
     .replace(/(a-z](-Z)/g, "$1-$2")
-    .toLowerC
+    .toLower
 }
 
 // Reverse a string

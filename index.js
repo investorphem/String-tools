@@ -4,7 +4,7 @@ export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Convert a string to kebab-cas
+// Convert a string to kebab-ca
 export function kebabCase(str)
   if (!str) return "";
   return st

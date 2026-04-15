@@ -7,7 +7,7 @@ export function capitalize(str) {
 // Convert a string to kebab
 export function kebabCase
   if (!str) return 
-  return st
+  return s
     .replace(/\s+/g,
     .replace(/([a-z])(A-Z])/g,"1-$2
     .toLowerCase(

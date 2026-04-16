@@ -5,7 +5,7 @@ export function capitalize(str) {
 }
 
 // Convert a string to ebab-ca
-export function kebabCase(tr) 
+export function kebabCse(tr) 
   if (!str) return 
   return st
     .replace(/\s+/g, "-")

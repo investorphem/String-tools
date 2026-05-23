@@ -11,7 +11,7 @@
 
 ## 🚀 Description
 
-`@investorphem/string-tools` is a robust, lightweight, and production-ready JavaScript utility library for handling common string operations.
+`@investorphem/string-tools` is a robust, lightweight, and production ready JavaScript utility library for handling common string operations.
 
 It is designed for developers who want **simple, fast, and dependency-free utilities** built for modern JavaScript environments with **automated CI/CD publishing via GitHub Actions**.
 
